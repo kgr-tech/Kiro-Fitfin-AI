@@ -4,6 +4,13 @@ Your personal AI mentor for health, fitness, finance, and personal growth - all 
 
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python)
+![Status](https://img.shields.io/badge/Status-Live-success?style=for-the-badge)
+
+## 🌐 Live Demo
+
+**Try it now!** 👉 [https://kgr-tech-kiro-fitfin-ai-app-xz0q19.streamlit.app/](https://kgr-tech-kiro-fitfin-ai-app-xz0q19.streamlit.app/)
+
+No installation needed - just click and start tracking your wellness journey!
 
 ## ✨ What is Kiro Fitfin AI?
 
@@ -18,7 +25,16 @@ Get a unified **LifeFitFinSync Score** that shows your overall wellness!
 
 ## 🚀 Quick Start
 
-### Run Locally
+### Option 1: Use Live Demo (Easiest!)
+
+**Just visit**: [https://kgr-tech-kiro-fitfin-ai-app-xz0q19.streamlit.app/](https://kgr-tech-kiro-fitfin-ai-app-xz0q19.streamlit.app/)
+
+✅ No installation required  
+✅ Works on any device  
+✅ Always up-to-date  
+✅ Free to use  
+
+### Option 2: Run Locally
 
 ```bash
 # Install dependencies
@@ -30,7 +46,7 @@ streamlit run app.py
 # Open http://localhost:8501
 ```
 
-### Deploy to Streamlit Cloud (Free!)
+### Option 3: Deploy Your Own (Free!)
 
 1. **Fork this repository** on GitHub
 2. Go to **https://share.streamlit.io/**
@@ -91,11 +107,24 @@ Your app will be live in 2 minutes! 🎉
 
 ## 🎨 Beautiful Design
 
-- 🌙 **Modern Dark Theme** with gradient backgrounds
+- 🔵 **Elegant Monochromatic Blue Theme** - Professional and calming
 - 💫 **Smooth Animations** and hover effects
-- 🎨 **Glassmorphism Cards** with shadows
+- 🎨 **Clean Card Design** with depth and shadows
 - 📱 **Responsive Layout** for all screen sizes
 - 🎯 **Color-Coded Scores** (Excellent/Good/Fair/Poor)
+
+## 🌟 Live Demo Features
+
+Visit the live demo to experience:
+
+1. **Quick Start Presets** - Click "Average Day" or "Active Day" for instant setup
+2. **Real-Time Calculations** - Watch your scores update as you input data
+3. **Interactive Charts** - Explore health trends, activity breakdowns, and more
+4. **Smart Tooltips** - Hover over inputs for helpful guidance
+5. **Emergency Alerts** - See how critical thresholds trigger warnings
+6. **Beautiful Visualizations** - Plotly charts with smooth interactions
+
+**👉 Try it now**: [Launch Live Demo](https://kgr-tech-kiro-fitfin-ai-app-xz0q19.streamlit.app/)
 
 ## 🛠️ Tech Stack
 
