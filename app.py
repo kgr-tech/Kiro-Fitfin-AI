@@ -11,164 +11,198 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for modern dark mode styling
+# Custom CSS for vibrant, user-friendly styling
 st.markdown("""
 <style>
-    /* Main background */
+    /* Main background - Softer, more inviting */
     .main {
-        background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
-        color: #e0e0e0;
+        background: linear-gradient(135deg, #1a1f3a 0%, #2d3561 100%);
+        color: #ffffff;
     }
     
-    /* Sidebar styling */
+    /* Sidebar styling - Vibrant purple/blue */
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #16213e 0%, #0f3460 100%);
+        background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
     }
     
-    /* Metric cards */
+    /* Metric cards - Colorful and distinct */
     [data-testid="stMetric"] {
-        background: linear-gradient(135deg, #2d2d44 0%, #1e1e3f 100%);
-        padding: 20px;
-        border-radius: 15px;
-        border: 1px solid #3d3d5c;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-        transition: transform 0.3s ease;
+        background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+        padding: 25px;
+        border-radius: 20px;
+        border: 3px solid #e0e7ff;
+        box-shadow: 0 10px 25px rgba(99, 102, 241, 0.2);
+        transition: all 0.3s ease;
     }
     
     [data-testid="stMetric"]:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 15px 35px rgba(99, 102, 241, 0.3);
+        border-color: #6366f1;
     }
     
-    /* Metric labels */
+    /* Metric labels - Clear and readable */
     [data-testid="stMetricLabel"] {
-        color: #a0a0c0;
-        font-size: 14px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-    
-    /* Metric values */
-    [data-testid="stMetricValue"] {
-        color: #00d4ff;
-        font-size: 32px;
+        color: #4f46e5;
+        font-size: 16px;
         font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
     }
     
-    /* Headers */
+    /* Metric values - Bold and prominent */
+    [data-testid="stMetricValue"] {
+        color: #6366f1;
+        font-size: 42px;
+        font-weight: 900;
+        text-shadow: 2px 2px 4px rgba(99, 102, 241, 0.1);
+    }
+    
+    /* Headers - Vibrant and eye-catching */
     h1 {
-        color: #00d4ff;
-        font-weight: 800;
-        text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        color: #fbbf24;
+        font-weight: 900;
+        text-shadow: 0 0 30px rgba(251, 191, 36, 0.5);
+        font-size: 3.5em !important;
     }
     
     h2 {
-        color: #00b4d8;
-        font-weight: 700;
+        color: #60a5fa;
+        font-weight: 800;
+        font-size: 2em !important;
     }
     
     h3 {
-        color: #90e0ef;
-        font-weight: 600;
+        color: #34d399;
+        font-weight: 700;
+        font-size: 1.5em !important;
     }
     
-    /* Emergency alert */
+    /* Emergency alert - Bright and attention-grabbing */
     .emergency-alert {
-        background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
         color: white;
-        padding: 25px;
-        border-radius: 15px;
-        margin-bottom: 25px;
-        border: 2px solid #ef4444;
-        box-shadow: 0 0 30px rgba(220, 38, 38, 0.5);
+        padding: 30px;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        border: 4px solid #fca5a5;
+        box-shadow: 0 0 40px rgba(239, 68, 68, 0.6);
         animation: pulse 2s infinite;
     }
     
     @keyframes pulse {
-        0%, 100% { box-shadow: 0 0 30px rgba(220, 38, 38, 0.5); }
-        50% { box-shadow: 0 0 50px rgba(220, 38, 38, 0.8); }
+        0%, 100% { 
+            box-shadow: 0 0 40px rgba(239, 68, 68, 0.6);
+            transform: scale(1);
+        }
+        50% { 
+            box-shadow: 0 0 60px rgba(239, 68, 68, 0.9);
+            transform: scale(1.02);
+        }
     }
     
-    /* Tabs */
+    /* Tabs - Colorful and clear */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-        background-color: #1e1e3f;
-        padding: 10px;
-        border-radius: 10px;
+        gap: 12px;
+        background: linear-gradient(135deg, #e0e7ff 0%, #dbeafe 100%);
+        padding: 15px;
+        border-radius: 15px;
     }
     
     .stTabs [data-baseweb="tab"] {
-        background-color: #2d2d44;
-        border-radius: 8px;
-        color: #a0a0c0;
-        padding: 10px 20px;
-        font-weight: 600;
-    }
-    
-    .stTabs [aria-selected="true"] {
-        background: linear-gradient(135deg, #00d4ff 0%, #0096c7 100%);
-        color: white;
-    }
-    
-    /* Progress bars */
-    .stProgress > div > div > div > div {
-        background: linear-gradient(90deg, #00d4ff 0%, #0096c7 100%);
-    }
-    
-    /* Input fields */
-    .stNumberInput > div > div > input,
-    .stSlider > div > div > div > div {
-        background-color: #2d2d44;
-        color: #e0e0e0;
-        border: 1px solid #3d3d5c;
-        border-radius: 8px;
-    }
-    
-    /* Buttons */
-    .stButton > button {
-        background: linear-gradient(135deg, #00d4ff 0%, #0096c7 100%);
-        color: white;
-        border: none;
-        border-radius: 10px;
-        padding: 10px 24px;
-        font-weight: 600;
+        background-color: #ffffff;
+        border-radius: 12px;
+        color: #6366f1;
+        padding: 12px 24px;
+        font-weight: 700;
+        border: 2px solid #e0e7ff;
         transition: all 0.3s ease;
     }
     
-    .stButton > button:hover {
-        transform: scale(1.05);
-        box-shadow: 0 8px 16px rgba(0, 212, 255, 0.4);
+    .stTabs [data-baseweb="tab"]:hover {
+        background-color: #f0f9ff;
+        border-color: #6366f1;
     }
     
-    /* Score badge */
+    .stTabs [aria-selected="true"] {
+        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        color: white;
+        border-color: #6366f1;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    }
+    
+    /* Progress bars - Vibrant gradient */
+    .stProgress > div > div > div > div {
+        background: linear-gradient(90deg, #10b981 0%, #34d399 50%, #6366f1 100%);
+    }
+    
+    /* Input fields - Clean and modern */
+    .stNumberInput > div > div > input,
+    .stSlider > div > div > div > div {
+        background-color: #ffffff;
+        color: #1f2937;
+        border: 2px solid #e0e7ff;
+        border-radius: 12px;
+        font-weight: 600;
+    }
+    
+    /* Buttons - Eye-catching and fun */
+    .stButton > button {
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        color: #1f2937;
+        border: none;
+        border-radius: 15px;
+        padding: 12px 28px;
+        font-weight: 800;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+    }
+    
+    .stButton > button:hover {
+        transform: scale(1.08) translateY(-2px);
+        box-shadow: 0 8px 20px rgba(251, 191, 36, 0.5);
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    }
+    
+    /* Score badge - Large and prominent */
     .score-badge {
         display: inline-block;
-        padding: 8px 16px;
-        border-radius: 20px;
-        font-weight: 700;
-        font-size: 18px;
-        margin: 10px 0;
+        padding: 15px 30px;
+        border-radius: 30px;
+        font-weight: 900;
+        font-size: 24px;
+        margin: 15px 0;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .score-badge:hover {
+        transform: scale(1.05);
     }
     
     .score-excellent {
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
         color: white;
+        border: 3px solid #6ee7b7;
     }
     
     .score-good {
-        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
         color: white;
+        border: 3px solid #93c5fd;
     }
     
     .score-fair {
-        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-        color: white;
+        background: linear-gradient(135deg, #fbbf24 0%, #fcd34d 100%);
+        color: #1f2937;
+        border: 3px solid #fde68a;
     }
     
     .score-poor {
-        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
         color: white;
+        border: 3px solid #fca5a5;
     }
 </style>
 """, unsafe_allow_html=True)
