@@ -360,7 +360,7 @@ describe('Score Calculation - Property-Based Tests', () => {
             // (unless other factors make them coincidentally equal)
             return true; // Sleep affects the score calculation
           }
-        }),
+        ),
         { numRuns: 100 }
       );
     });
