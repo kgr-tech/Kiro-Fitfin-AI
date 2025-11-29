@@ -200,39 +200,146 @@ st.markdown("""
 
 # Sidebar for data input
 with st.sidebar:
-    st.markdown("## 📊 Data Input")
+    st.markdown("## 📊 Quick Input")
+    
+    # Quick preset buttons
+    st.markdown("### ⚡ Quick Start")
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("🎯 Average Day", use_container_width=True):
+            st.session_state.preset = "average"
+    with col2:
+        if st.button("💪 Active Day", use_container_width=True):
+            st.session_state.preset = "active"
+    
     st.markdown("---")
     
     # Health Metrics
     st.markdown("### ❤️ Health & Diet")
-    calories = st.number_input("🍽️ Daily Calories", min_value=0, max_value=5000, value=2000, help="Target: 1800-2500 kcal")
-    hydration = st.slider("💧 Hydration (Liters)", 0.0, 5.0, 2.0, 0.1, help="Target: 2-3 liters/day")
-    sleep_hours = st.slider("😴 Sleep Hours", 0.0, 12.0, 7.0, 0.5, help="Target: 7-9 hours")
-    diet_quality = st.slider("🥗 Diet Quality Score", 0, 100, 75, help="Rate your meal quality")
+    
+    # Preset values
+    if 'preset' not in st.session_state:
+        st.session_state.preset = None
+    
+    if st.session_state.preset == "average":
+        cal_default, hyd_default, sleep_default, diet_default = 2000, 2.0, 7.0, 70
+    elif st.session_state.preset == "active":
+        cal_default, hyd_default, sleep_default, diet_default = 2500, 3.0, 8.0, 85
+    else:
+        cal_default, hyd_default, sleep_default, diet_default = 2000, 2.0, 7.0, 75
+    
+    calories = st.number_input(
+        "🍽️ Daily Calories", 
+        min_value=0, max_value=5000, 
+        value=cal_default,
+        step=100,
+        help="💡 Recommended: 1800-2500 kcal/day"
+    )
+    
+    hydration = st.slider(
+        "💧 Hydration (Liters)", 
+        0.0, 5.0, hyd_default, 0.1,
+        help="💡 Drink 2-3 liters daily for optimal health"
+    )
+    
+    sleep_hours = st.slider(
+        "😴 Sleep Hours", 
+        0.0, 12.0, sleep_default, 0.5,
+        help="💡 Aim for 7-9 hours of quality sleep"
+    )
+    
+    diet_quality = st.slider(
+        "🥗 Diet Quality", 
+        0, 100, diet_default,
+        help="💡 Rate: 0=Poor, 50=Average, 100=Excellent"
+    )
+    
     st.markdown("---")
     
     # Fitness Metrics
     st.markdown("### 💪 Fitness & Activity")
-    daily_steps = st.number_input("👟 Daily Steps", min_value=0, max_value=50000, value=8000, help="Target: 10,000 steps")
-    exercise_minutes = st.number_input("⏱️ Exercise Minutes", min_value=0, max_value=300, value=30, help="Target: 30-60 min/day")
+    
+    if st.session_state.preset == "average":
+        steps_default, exercise_default = 8000, 30
+    elif st.session_state.preset == "active":
+        steps_default, exercise_default = 12000, 60
+    else:
+        steps_default, exercise_default = 8000, 30
+    
+    daily_steps = st.number_input(
+        "👟 Daily Steps", 
+        min_value=0, max_value=50000, 
+        value=steps_default,
+        step=1000,
+        help="💡 Target: 10,000 steps/day"
+    )
+    
+    exercise_minutes = st.number_input(
+        "⏱️ Exercise Minutes", 
+        min_value=0, max_value=300, 
+        value=exercise_default,
+        step=5,
+        help="💡 Minimum: 30 min/day, Optimal: 60 min/day"
+    )
+    
     st.markdown("---")
     
     # Finance Metrics
     st.markdown("### 💰 Financial Sync")
-    home_cooked = st.number_input("🏠 Home-cooked Meals (week)", min_value=0, max_value=21, value=15)
-    takeout_meals = st.number_input("🍕 Takeout Meals (week)", min_value=0, max_value=21, value=6)
-    grocery_spend = st.number_input("🛒 Grocery Spend ($)", min_value=0.0, value=150.0)
+    
+    home_cooked = st.number_input(
+        "🏠 Home-cooked Meals", 
+        min_value=0, max_value=21, 
+        value=15,
+        help="💡 More home cooking = Better health + savings"
+    )
+    
+    takeout_meals = st.number_input(
+        "🍕 Takeout Meals", 
+        min_value=0, max_value=21, 
+        value=6,
+        help="💡 Try to limit takeout to save money"
+    )
+    
+    grocery_spend = st.number_input(
+        "🛒 Weekly Grocery ($)", 
+        min_value=0.0, 
+        value=150.0,
+        step=10.0,
+        help="💡 Plan meals to reduce waste"
+    )
+    
     st.markdown("---")
     
     # Growth Metrics
     st.markdown("### 📚 Personal Development")
-    study_blocks = st.number_input("✅ Study Blocks Completed", min_value=0, max_value=50, value=10)
-    study_planned = st.number_input("📋 Study Blocks Planned", min_value=1, max_value=50, value=15)
+    
+    study_planned = st.number_input(
+        "📋 Study Blocks Planned", 
+        min_value=1, max_value=50, 
+        value=15,
+        help="💡 Plan realistic study goals"
+    )
+    
+    study_blocks = st.number_input(
+        "✅ Study Blocks Done", 
+        min_value=0, 
+        max_value=study_planned, 
+        value=min(10, study_planned),
+        help="💡 Track your progress daily"
+    )
     
     st.markdown("---")
+    
+    # Reset button
+    if st.button("🔄 Reset to Defaults", use_container_width=True):
+        st.session_state.preset = None
+        st.rerun()
+    
     st.markdown("""
     <div style="text-align: center; padding: 10px; color: #a0a0c0; font-size: 12px;">
-        <p>💡 Tip: Update your metrics daily for best results</p>
+        <p>💡 Tip: Use Quick Start buttons for easy setup!</p>
+        <p>📊 Update daily for accurate tracking</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -279,23 +386,62 @@ finance_score = calculate_finance_score(home_cooked, takeout_meals)
 growth_score = calculate_growth_score(study_blocks, study_planned)
 overall_score = (health_score + fitness_score + finance_score + growth_score) / 4
 
+# Welcome message for first-time users
+if 'first_visit' not in st.session_state:
+    st.session_state.first_visit = True
+
+if st.session_state.first_visit:
+    st.info("""
+    👋 **Welcome to Kiro Fitfin AI!**
+    
+    Get started in 3 easy steps:
+    1. 📊 Use the sidebar to input your daily metrics
+    2. 🎯 Click "Quick Start" buttons for preset values
+    3. 📈 Watch your scores update in real-time!
+    """)
+    if st.button("✅ Got it! Let's start"):
+        st.session_state.first_visit = False
+        st.rerun()
+
 # Emergency Alert (if any metric is critical)
 show_alert = hydration < 1.0 or sleep_hours < 5.0
 if show_alert:
     st.markdown("""
     <div class="emergency-alert">
-        <h3>⚠️ EMERGENCY ALERT</h3>
-        <p>Critical health threshold detected. Please consult your doctor immediately.</p>
-        <p><strong>Dr. Sarah Johnson</strong><br>
-        📞 +1 (555) 123-4567<br>
-        📧 dr.johnson@healthclinic.com</p>
+        <h3>⚠️ HEALTH ALERT</h3>
+        <p><strong>Critical threshold detected!</strong> Please take action:</p>
+        <ul>
+            <li>💧 Drink more water if hydration is low</li>
+            <li>😴 Get more sleep if under 5 hours</li>
+            <li>👨‍⚕️ Consult your doctor if symptoms persist</li>
+        </ul>
+        <p style="margin-top: 15px;"><strong>Emergency Contact:</strong><br>
+        Dr. Sarah Johnson | 📞 +1 (555) 123-4567 | 📧 dr.johnson@healthclinic.com</p>
     </div>
     """, unsafe_allow_html=True)
 
 # Main Dashboard
 st.markdown("<br>", unsafe_allow_html=True)
-st.markdown("## 📈 LifeFitFinSync Score")
+st.markdown("## 📈 Your LifeFitFinSync Score")
 st.markdown(get_score_badge(overall_score), unsafe_allow_html=True)
+
+# Score explanation
+with st.expander("ℹ️ What does my score mean?"):
+    st.markdown("""
+    **Your score is calculated from 4 key areas:**
+    
+    - ❤️ **Health Score** - Based on calories, hydration, sleep, and diet quality
+    - 💪 **Fitness Score** - Based on daily steps and exercise minutes
+    - 💰 **Finance Score** - Based on home-cooked vs takeout meals
+    - 📚 **Growth Score** - Based on study completion rate
+    
+    **Score Ranges:**
+    - 🌟 80-100: Excellent! Keep it up!
+    - ✅ 60-79: Good progress, room to improve
+    - ⚠️ 40-59: Fair, focus on weak areas
+    - ⚡ 0-39: Needs attention, start small
+    """)
+
 st.markdown("<br>", unsafe_allow_html=True)
 
 # Score cards with icons
