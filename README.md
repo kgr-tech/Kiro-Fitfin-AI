@@ -113,18 +113,7 @@ Your app will be live in 2 minutes! 🎉
 - 📱 **Responsive Layout** for all screen sizes
 - 🎯 **Color-Coded Scores** (Excellent/Good/Fair/Poor)
 
-## 🌟 Live Demo Features
 
-Visit the live demo to experience:
-
-1. **Quick Start Presets** - Click "Average Day" or "Active Day" for instant setup
-2. **Real-Time Calculations** - Watch your scores update as you input data
-3. **Interactive Charts** - Explore health trends, activity breakdowns, and more
-4. **Smart Tooltips** - Hover over inputs for helpful guidance
-5. **Emergency Alerts** - See how critical thresholds trigger warnings
-6. **Beautiful Visualizations** - Plotly charts with smooth interactions
-
-**👉 Try it now**: [Launch Live Demo](https://kgr-tech-kiro-fitfin-ai-app-xz0q19.streamlit.app/)
 
 ## 🛠️ Tech Stack
 
@@ -185,30 +174,7 @@ Navigate through tabs:
 - 💪 **Celebrate Wins** - Acknowledge progress
 - 🔄 **Stay Consistent** - Make it a habit
 
-## 🌟 Key Features
 
-### Quick Start Presets ⚡
-- One-click setup with "Average Day" or "Active Day"
-- No need to fill every field manually
-- Smart defaults based on health recommendations
-
-### Helpful Tooltips 💡
-- Every input has guidance
-- Shows target ranges
-- Explains what each metric means
-- Helps you make informed choices
-
-### Score Explanations ℹ️
-- Expandable info sections
-- Understand how scores are calculated
-- Learn what each range means
-- Get actionable insights
-
-### Visual Feedback 📊
-- Color-coded score badges
-- Progress bars with percentages
-- Interactive charts
-- Motivational messages
 
 ## 🚀 Deployment
 
