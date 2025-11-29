@@ -11,24 +11,164 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for dark mode styling
+# Custom CSS for modern dark mode styling
 st.markdown("""
 <style>
+    /* Main background */
     .main {
-        background-color: #1a1a1a;
+        background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
         color: #e0e0e0;
     }
-    .stMetric {
-        background-color: #2d2d2d;
-        padding: 15px;
+    
+    /* Sidebar styling */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #16213e 0%, #0f3460 100%);
+    }
+    
+    /* Metric cards */
+    [data-testid="stMetric"] {
+        background: linear-gradient(135deg, #2d2d44 0%, #1e1e3f 100%);
+        padding: 20px;
+        border-radius: 15px;
+        border: 1px solid #3d3d5c;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease;
+    }
+    
+    [data-testid="stMetric"]:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+    }
+    
+    /* Metric labels */
+    [data-testid="stMetricLabel"] {
+        color: #a0a0c0;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    /* Metric values */
+    [data-testid="stMetricValue"] {
+        color: #00d4ff;
+        font-size: 32px;
+        font-weight: 700;
+    }
+    
+    /* Headers */
+    h1 {
+        color: #00d4ff;
+        font-weight: 800;
+        text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    }
+    
+    h2 {
+        color: #00b4d8;
+        font-weight: 700;
+    }
+    
+    h3 {
+        color: #90e0ef;
+        font-weight: 600;
+    }
+    
+    /* Emergency alert */
+    .emergency-alert {
+        background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+        color: white;
+        padding: 25px;
+        border-radius: 15px;
+        margin-bottom: 25px;
+        border: 2px solid #ef4444;
+        box-shadow: 0 0 30px rgba(220, 38, 38, 0.5);
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% { box-shadow: 0 0 30px rgba(220, 38, 38, 0.5); }
+        50% { box-shadow: 0 0 50px rgba(220, 38, 38, 0.8); }
+    }
+    
+    /* Tabs */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 8px;
+        background-color: #1e1e3f;
+        padding: 10px;
+        border-radius: 10px;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        background-color: #2d2d44;
+        border-radius: 8px;
+        color: #a0a0c0;
+        padding: 10px 20px;
+        font-weight: 600;
+    }
+    
+    .stTabs [aria-selected="true"] {
+        background: linear-gradient(135deg, #00d4ff 0%, #0096c7 100%);
+        color: white;
+    }
+    
+    /* Progress bars */
+    .stProgress > div > div > div > div {
+        background: linear-gradient(90deg, #00d4ff 0%, #0096c7 100%);
+    }
+    
+    /* Input fields */
+    .stNumberInput > div > div > input,
+    .stSlider > div > div > div > div {
+        background-color: #2d2d44;
+        color: #e0e0e0;
+        border: 1px solid #3d3d5c;
         border-radius: 8px;
     }
-    .emergency-alert {
-        background-color: #dc2626;
+    
+    /* Buttons */
+    .stButton > button {
+        background: linear-gradient(135deg, #00d4ff 0%, #0096c7 100%);
         color: white;
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 20px;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 24px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .stButton > button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 212, 255, 0.4);
+    }
+    
+    /* Score badge */
+    .score-badge {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 700;
+        font-size: 18px;
+        margin: 10px 0;
+    }
+    
+    .score-excellent {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+    }
+    
+    .score-good {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        color: white;
+    }
+    
+    .score-fair {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        color: white;
+    }
+    
+    .score-poor {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        color: white;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -37,38 +177,64 @@ st.markdown("""
 if 'dark_mode' not in st.session_state:
     st.session_state.dark_mode = True
 
-# Header
-col1, col2 = st.columns([6, 1])
-with col1:
-    st.title("🎯 Kiro Fitfin AI")
-    st.markdown("*Your unified health, fitness, finance, and personal growth mentor*")
+# Helper function for score badges
+def get_score_badge(score):
+    if score >= 80:
+        return f'<span class="score-badge score-excellent">⭐ {score:.1f} - Excellent</span>'
+    elif score >= 60:
+        return f'<span class="score-badge score-good">✓ {score:.1f} - Good</span>'
+    elif score >= 40:
+        return f'<span class="score-badge score-fair">⚠ {score:.1f} - Fair</span>'
+    else:
+        return f'<span class="score-badge score-poor">⚡ {score:.1f} - Needs Attention</span>'
+
+# Header with gradient
+st.markdown("""
+<div style="text-align: center; padding: 20px 0;">
+    <h1 style="font-size: 48px; margin-bottom: 10px;">🎯 Kiro Fitfin AI</h1>
+    <p style="font-size: 18px; color: #a0a0c0; font-style: italic;">
+        Your unified health, fitness, finance, and personal growth mentor
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
 # Sidebar for data input
 with st.sidebar:
-    st.header("📊 Data Input")
+    st.markdown("## 📊 Data Input")
+    st.markdown("---")
     
     # Health Metrics
-    st.subheader("Health & Diet")
-    calories = st.number_input("Daily Calories", min_value=0, max_value=5000, value=2000)
-    hydration = st.slider("Hydration (Liters)", 0.0, 5.0, 2.0, 0.1)
-    sleep_hours = st.slider("Sleep Hours", 0.0, 12.0, 7.0, 0.5)
-    diet_quality = st.slider("Diet Quality Score", 0, 100, 75)
+    st.markdown("### ❤️ Health & Diet")
+    calories = st.number_input("🍽️ Daily Calories", min_value=0, max_value=5000, value=2000, help="Target: 1800-2500 kcal")
+    hydration = st.slider("💧 Hydration (Liters)", 0.0, 5.0, 2.0, 0.1, help="Target: 2-3 liters/day")
+    sleep_hours = st.slider("😴 Sleep Hours", 0.0, 12.0, 7.0, 0.5, help="Target: 7-9 hours")
+    diet_quality = st.slider("🥗 Diet Quality Score", 0, 100, 75, help="Rate your meal quality")
+    st.markdown("---")
     
     # Fitness Metrics
-    st.subheader("Fitness & Activity")
-    daily_steps = st.number_input("Daily Steps", min_value=0, max_value=50000, value=8000)
-    exercise_minutes = st.number_input("Exercise Minutes", min_value=0, max_value=300, value=30)
+    st.markdown("### 💪 Fitness & Activity")
+    daily_steps = st.number_input("👟 Daily Steps", min_value=0, max_value=50000, value=8000, help="Target: 10,000 steps")
+    exercise_minutes = st.number_input("⏱️ Exercise Minutes", min_value=0, max_value=300, value=30, help="Target: 30-60 min/day")
+    st.markdown("---")
     
     # Finance Metrics
-    st.subheader("Financial Sync")
-    home_cooked = st.number_input("Home-cooked Meals (week)", min_value=0, max_value=21, value=15)
-    takeout_meals = st.number_input("Takeout Meals (week)", min_value=0, max_value=21, value=6)
-    grocery_spend = st.number_input("Grocery Spend ($)", min_value=0.0, value=150.0)
+    st.markdown("### 💰 Financial Sync")
+    home_cooked = st.number_input("🏠 Home-cooked Meals (week)", min_value=0, max_value=21, value=15)
+    takeout_meals = st.number_input("🍕 Takeout Meals (week)", min_value=0, max_value=21, value=6)
+    grocery_spend = st.number_input("🛒 Grocery Spend ($)", min_value=0.0, value=150.0)
+    st.markdown("---")
     
     # Growth Metrics
-    st.subheader("Personal Development")
-    study_blocks = st.number_input("Study Blocks Completed", min_value=0, max_value=50, value=10)
-    study_planned = st.number_input("Study Blocks Planned", min_value=1, max_value=50, value=15)
+    st.markdown("### 📚 Personal Development")
+    study_blocks = st.number_input("✅ Study Blocks Completed", min_value=0, max_value=50, value=10)
+    study_planned = st.number_input("📋 Study Blocks Planned", min_value=1, max_value=50, value=15)
+    
+    st.markdown("---")
+    st.markdown("""
+    <div style="text-align: center; padding: 10px; color: #a0a0c0; font-size: 12px;">
+        <p>💡 Tip: Update your metrics daily for best results</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 # Calculate scores
 def calculate_health_score(calories, hydration, sleep, diet_quality):
@@ -127,79 +293,215 @@ if show_alert:
     """, unsafe_allow_html=True)
 
 # Main Dashboard
-st.header("📈 LifeFitFinSync Score")
+st.markdown("<br>", unsafe_allow_html=True)
+st.markdown("## 📈 LifeFitFinSync Score")
+st.markdown(get_score_badge(overall_score), unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
 
-# Score cards
+# Score cards with icons
 col1, col2, col3, col4, col5 = st.columns(5)
 
 with col1:
-    st.metric("Overall Score", f"{overall_score:.1f}", delta=None)
+    st.metric("🎯 Overall Score", f"{overall_score:.1f}")
 with col2:
-    st.metric("Health", f"{health_score:.1f}", delta=None)
+    st.metric("❤️ Health", f"{health_score:.1f}")
 with col3:
-    st.metric("Fitness", f"{fitness_score:.1f}", delta=None)
+    st.metric("💪 Fitness", f"{fitness_score:.1f}")
 with col4:
-    st.metric("Finance", f"{finance_score:.1f}", delta=None)
+    st.metric("💰 Finance", f"{finance_score:.1f}")
 with col5:
-    st.metric("Growth", f"{growth_score:.1f}", delta=None)
+    st.metric("📚 Growth", f"{growth_score:.1f}")
 
 # Detailed sections
 tab1, tab2, tab3, tab4 = st.tabs(["🥗 Health", "💪 Fitness", "💰 Finance", "📚 Growth"])
 
 with tab1:
-    st.subheader("Diet & Health Insights")
-    col1, col2 = st.columns(2)
+    st.markdown("### 🥗 Diet & Health Insights")
+    col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.metric("Daily Calories", f"{calories} kcal")
-        st.metric("Hydration", f"{hydration} L")
+        st.metric("🍽️ Daily Calories", f"{calories} kcal")
     with col2:
-        st.metric("Sleep Hours", f"{sleep_hours} hrs")
-        st.metric("Diet Quality", f"{diet_quality}/100")
+        st.metric("💧 Hydration", f"{hydration} L")
+    with col3:
+        st.metric("😴 Sleep Hours", f"{sleep_hours} hrs")
+    with col4:
+        st.metric("🥗 Diet Quality", f"{diet_quality}/100")
     
-    # Health trend chart
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Health trend chart with modern styling
     fig = go.Figure()
-    dates = [(datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d") for i in range(7, 0, -1)]
-    scores = [health_score + (i * 2) for i in range(-3, 4)]
-    fig.add_trace(go.Scatter(x=dates, y=scores, mode='lines+markers', name='Health Score'))
-    fig.update_layout(title="7-Day Health Trend", xaxis_title="Date", yaxis_title="Score")
+    dates = [(datetime.now() - timedelta(days=i)).strftime("%b %d") for i in range(7, 0, -1)]
+    scores = [max(0, min(100, health_score + (i * 2))) for i in range(-3, 4)]
+    
+    fig.add_trace(go.Scatter(
+        x=dates, 
+        y=scores, 
+        mode='lines+markers',
+        name='Health Score',
+        line=dict(color='#00d4ff', width=3),
+        marker=dict(size=10, color='#00d4ff', line=dict(color='white', width=2)),
+        fill='tozeroy',
+        fillcolor='rgba(0, 212, 255, 0.1)'
+    ))
+    
+    fig.update_layout(
+        title="📈 7-Day Health Trend",
+        xaxis_title="Date",
+        yaxis_title="Score",
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(color='#e0e0e0'),
+        hovermode='x unified',
+        yaxis=dict(range=[0, 100], gridcolor='rgba(255,255,255,0.1)'),
+        xaxis=dict(gridcolor='rgba(255,255,255,0.1)')
+    )
     st.plotly_chart(fig, use_container_width=True)
 
 with tab2:
-    st.subheader("Fitness & Activity Plan")
+    st.markdown("### 💪 Fitness & Activity Plan")
+    
     col1, col2 = st.columns(2)
     with col1:
-        st.metric("Daily Steps", f"{daily_steps:,}")
-        st.progress(min(daily_steps / 10000, 1.0))
+        st.metric("👟 Daily Steps", f"{daily_steps:,}")
+        steps_progress = min(daily_steps / 10000, 1.0)
+        st.progress(steps_progress)
+        st.caption(f"Target: 10,000 steps ({steps_progress*100:.0f}% complete)")
     with col2:
-        st.metric("Exercise Minutes", f"{exercise_minutes} min")
-        st.progress(min(exercise_minutes / 60, 1.0))
-
-with tab3:
-    st.subheader("Financial Sync Report")
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.metric("Home-cooked Meals", f"{home_cooked}/week")
-    with col2:
-        st.metric("Takeout Meals", f"{takeout_meals}/week")
-    with col3:
-        st.metric("Grocery Spend", f"${grocery_spend:.2f}")
+        st.metric("⏱️ Exercise Minutes", f"{exercise_minutes} min")
+        exercise_progress = min(exercise_minutes / 60, 1.0)
+        st.progress(exercise_progress)
+        st.caption(f"Target: 60 minutes ({exercise_progress*100:.0f}% complete)")
     
-    # Meal distribution pie chart
-    fig = go.Figure(data=[go.Pie(labels=['Home-cooked', 'Takeout'], 
-                                  values=[home_cooked, takeout_meals])])
-    fig.update_layout(title="Weekly Meal Distribution")
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Activity breakdown
+    st.markdown("#### 📊 Activity Breakdown")
+    activity_data = {
+        'Activity': ['Steps', 'Exercise', 'Rest'],
+        'Minutes': [daily_steps / 100, exercise_minutes, max(0, 1440 - (daily_steps / 100) - exercise_minutes)]
+    }
+    
+    fig = go.Figure(data=[go.Pie(
+        labels=activity_data['Activity'],
+        values=activity_data['Minutes'],
+        hole=.4,
+        marker=dict(colors=['#00d4ff', '#0096c7', '#2d2d44'])
+    )])
+    
+    fig.update_layout(
+        title="Daily Activity Distribution",
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(color='#e0e0e0')
+    )
     st.plotly_chart(fig, use_container_width=True)
 
-with tab4:
-    st.subheader("Personal Development")
-    col1, col2 = st.columns(2)
+with tab3:
+    st.markdown("### 💰 Financial Sync Report")
+    col1, col2, col3 = st.columns(3)
     with col1:
-        st.metric("Study Blocks Completed", f"{study_blocks}/{study_planned}")
-        st.progress(min(study_blocks / study_planned, 1.0))
+        st.metric("🏠 Home-cooked Meals", f"{home_cooked}/week")
     with col2:
-        completion_rate = (study_blocks / study_planned * 100) if study_planned > 0 else 0
-        st.metric("Completion Rate", f"{completion_rate:.1f}%")
+        st.metric("🍕 Takeout Meals", f"{takeout_meals}/week")
+    with col3:
+        st.metric("🛒 Grocery Spend", f"${grocery_spend:.2f}")
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Meal distribution with modern styling
+    total_meals = home_cooked + takeout_meals
+    home_pct = (home_cooked / total_meals * 100) if total_meals > 0 else 0
+    
+    fig = go.Figure(data=[go.Pie(
+        labels=['🏠 Home-cooked', '🍕 Takeout'], 
+        values=[home_cooked, takeout_meals],
+        hole=.4,
+        marker=dict(colors=['#10b981', '#ef4444']),
+        textinfo='label+percent',
+        textfont=dict(size=14, color='white')
+    )])
+    
+    fig.update_layout(
+        title=f"Weekly Meal Distribution ({home_pct:.0f}% Home-cooked)",
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(color='#e0e0e0')
+    )
+    st.plotly_chart(fig, use_container_width=True)
+    
+    # Financial insights
+    if home_pct >= 70:
+        st.success("✅ Excellent! You're cooking at home most of the time.")
+    elif home_pct >= 50:
+        st.info("💡 Good progress! Try to increase home-cooked meals.")
+    else:
+        st.warning("⚠️ Consider cooking more at home to save money and eat healthier.")
+
+with tab4:
+    st.markdown("### 📚 Personal Development")
+    
+    completion_rate = (study_blocks / study_planned * 100) if study_planned > 0 else 0
+    
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric("✅ Completed", f"{study_blocks}")
+    with col2:
+        st.metric("📋 Planned", f"{study_planned}")
+    with col3:
+        st.metric("📊 Completion Rate", f"{completion_rate:.1f}%")
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Progress visualization
+    progress = min(study_blocks / study_planned, 1.0)
+    st.progress(progress)
+    st.caption(f"{study_blocks} of {study_planned} study blocks completed")
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Study progress chart
+    fig = go.Figure()
+    
+    fig.add_trace(go.Bar(
+        x=['Completed', 'Remaining'],
+        y=[study_blocks, max(0, study_planned - study_blocks)],
+        marker=dict(color=['#00d4ff', '#2d2d44']),
+        text=[study_blocks, max(0, study_planned - study_blocks)],
+        textposition='auto',
+    ))
+    
+    fig.update_layout(
+        title="Study Progress Overview",
+        yaxis_title="Study Blocks",
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(color='#e0e0e0'),
+        yaxis=dict(gridcolor='rgba(255,255,255,0.1)'),
+        showlegend=False
+    )
+    st.plotly_chart(fig, use_container_width=True)
+    
+    # Motivational message
+    if completion_rate >= 80:
+        st.success("🌟 Outstanding! You're crushing your study goals!")
+    elif completion_rate >= 60:
+        st.info("💪 Great work! Keep up the momentum!")
+    elif completion_rate >= 40:
+        st.warning("📈 You're making progress. Stay focused!")
+    else:
+        st.error("⚡ Time to catch up! You can do this!")
 
 # Footer
+st.markdown("<br><br>", unsafe_allow_html=True)
 st.markdown("---")
-st.markdown("*Kiro Fitfin AI - Your discipline-focused mentor for health, fitness, finance, and growth*")
+st.markdown("""
+<div style="text-align: center; padding: 20px; color: #a0a0c0;">
+    <p style="font-size: 14px; margin-bottom: 10px;">
+        <strong>Kiro Fitfin AI</strong> - Your discipline-focused mentor for health, fitness, finance, and growth
+    </p>
+    <p style="font-size: 12px; color: #6b7280;">
+        💡 Track daily • 📊 Analyze trends • 🎯 Achieve goals
+    </p>
+</div>
+""", unsafe_allow_html=True)
