@@ -171,13 +171,9 @@ This is a personal project, but suggestions are welcome! Feel free to:
 - Suggest features
 - Share feedback
 
-## 📄 License
-
-Private - All rights reserved
-
 ## 🌟 Made with
 
-Built with ❤️ using React, TypeScript, Streamlit, and modern web technologies.
+Built with ❤️ using React, TypeScript, Streamlit and modern web technologies.
 
 ---
 
