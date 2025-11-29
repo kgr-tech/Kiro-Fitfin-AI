@@ -11,161 +11,161 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for vibrant, user-friendly styling
+# Custom CSS for elegant monochromatic blue styling
 st.markdown("""
 <style>
-    /* Main background - Softer, more inviting */
+    /* Main background - Deep blue monochrome */
     .main {
-        background: linear-gradient(135deg, #1a1f3a 0%, #2d3561 100%);
-        color: #ffffff;
+        background: linear-gradient(135deg, #0c1e3d 0%, #1a3a5c 100%);
+        color: #e8f4f8;
     }
     
-    /* Sidebar styling - Vibrant purple/blue */
+    /* Sidebar styling - Medium blue */
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
+        background: linear-gradient(180deg, #1e4d7b 0%, #2563a8 100%);
     }
     
-    /* Metric cards - Colorful and distinct */
+    /* Metric cards - Light blue with depth */
     [data-testid="stMetric"] {
-        background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+        background: linear-gradient(135deg, #e8f4f8 0%, #d1e7f0 100%);
         padding: 25px;
         border-radius: 20px;
-        border: 3px solid #e0e7ff;
-        box-shadow: 0 10px 25px rgba(99, 102, 241, 0.2);
+        border: 3px solid #a8d5e8;
+        box-shadow: 0 10px 25px rgba(37, 99, 168, 0.3);
         transition: all 0.3s ease;
     }
     
     [data-testid="stMetric"]:hover {
         transform: translateY(-8px) scale(1.02);
-        box-shadow: 0 15px 35px rgba(99, 102, 241, 0.3);
-        border-color: #6366f1;
+        box-shadow: 0 15px 35px rgba(37, 99, 168, 0.4);
+        border-color: #2563a8;
     }
     
-    /* Metric labels - Clear and readable */
+    /* Metric labels - Dark blue */
     [data-testid="stMetricLabel"] {
-        color: #4f46e5;
+        color: #1e4d7b;
         font-size: 16px;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 1.5px;
     }
     
-    /* Metric values - Bold and prominent */
+    /* Metric values - Vibrant blue */
     [data-testid="stMetricValue"] {
-        color: #6366f1;
+        color: #2563a8;
         font-size: 42px;
         font-weight: 900;
-        text-shadow: 2px 2px 4px rgba(99, 102, 241, 0.1);
+        text-shadow: 2px 2px 4px rgba(37, 99, 168, 0.2);
     }
     
-    /* Headers - Vibrant and eye-catching */
+    /* Headers - Monochromatic blue shades */
     h1 {
-        color: #fbbf24;
+        color: #5fa3d0;
         font-weight: 900;
-        text-shadow: 0 0 30px rgba(251, 191, 36, 0.5);
+        text-shadow: 0 0 30px rgba(95, 163, 208, 0.5);
         font-size: 3.5em !important;
     }
     
     h2 {
-        color: #60a5fa;
+        color: #7bb8db;
         font-weight: 800;
         font-size: 2em !important;
     }
     
     h3 {
-        color: #34d399;
+        color: #a8d5e8;
         font-weight: 700;
         font-size: 1.5em !important;
     }
     
-    /* Emergency alert - Bright and attention-grabbing */
+    /* Emergency alert - Dark blue with urgency */
     .emergency-alert {
-        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-        color: white;
+        background: linear-gradient(135deg, #0c4a6e 0%, #075985 100%);
+        color: #e8f4f8;
         padding: 30px;
         border-radius: 20px;
         margin-bottom: 30px;
-        border: 4px solid #fca5a5;
-        box-shadow: 0 0 40px rgba(239, 68, 68, 0.6);
+        border: 4px solid #38bdf8;
+        box-shadow: 0 0 40px rgba(56, 189, 248, 0.6);
         animation: pulse 2s infinite;
     }
     
     @keyframes pulse {
         0%, 100% { 
-            box-shadow: 0 0 40px rgba(239, 68, 68, 0.6);
+            box-shadow: 0 0 40px rgba(56, 189, 248, 0.6);
             transform: scale(1);
         }
         50% { 
-            box-shadow: 0 0 60px rgba(239, 68, 68, 0.9);
+            box-shadow: 0 0 60px rgba(56, 189, 248, 0.9);
             transform: scale(1.02);
         }
     }
     
-    /* Tabs - Colorful and clear */
+    /* Tabs - Monochromatic blue */
     .stTabs [data-baseweb="tab-list"] {
         gap: 12px;
-        background: linear-gradient(135deg, #e0e7ff 0%, #dbeafe 100%);
+        background: linear-gradient(135deg, #d1e7f0 0%, #a8d5e8 100%);
         padding: 15px;
         border-radius: 15px;
     }
     
     .stTabs [data-baseweb="tab"] {
-        background-color: #ffffff;
+        background-color: #e8f4f8;
         border-radius: 12px;
-        color: #6366f1;
+        color: #1e4d7b;
         padding: 12px 24px;
         font-weight: 700;
-        border: 2px solid #e0e7ff;
+        border: 2px solid #a8d5e8;
         transition: all 0.3s ease;
     }
     
     .stTabs [data-baseweb="tab"]:hover {
-        background-color: #f0f9ff;
-        border-color: #6366f1;
+        background-color: #d1e7f0;
+        border-color: #2563a8;
     }
     
     .stTabs [aria-selected="true"] {
-        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-        color: white;
-        border-color: #6366f1;
-        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        background: linear-gradient(135deg, #2563a8 0%, #1e4d7b 100%);
+        color: #e8f4f8;
+        border-color: #2563a8;
+        box-shadow: 0 4px 12px rgba(37, 99, 168, 0.4);
     }
     
-    /* Progress bars - Vibrant gradient */
+    /* Progress bars - Blue gradient */
     .stProgress > div > div > div > div {
-        background: linear-gradient(90deg, #10b981 0%, #34d399 50%, #6366f1 100%);
+        background: linear-gradient(90deg, #0c4a6e 0%, #2563a8 50%, #5fa3d0 100%);
     }
     
-    /* Input fields - Clean and modern */
+    /* Input fields - Light blue */
     .stNumberInput > div > div > input,
     .stSlider > div > div > div > div {
-        background-color: #ffffff;
-        color: #1f2937;
-        border: 2px solid #e0e7ff;
+        background-color: #e8f4f8;
+        color: #0c1e3d;
+        border: 2px solid #a8d5e8;
         border-radius: 12px;
         font-weight: 600;
     }
     
-    /* Buttons - Eye-catching and fun */
+    /* Buttons - Medium blue */
     .stButton > button {
-        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-        color: #1f2937;
+        background: linear-gradient(135deg, #2563a8 0%, #1e4d7b 100%);
+        color: #e8f4f8;
         border: none;
         border-radius: 15px;
         padding: 12px 28px;
         font-weight: 800;
         font-size: 16px;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+        box-shadow: 0 4px 12px rgba(37, 99, 168, 0.3);
     }
     
     .stButton > button:hover {
         transform: scale(1.08) translateY(-2px);
-        box-shadow: 0 8px 20px rgba(251, 191, 36, 0.5);
-        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        box-shadow: 0 8px 20px rgba(37, 99, 168, 0.5);
+        background: linear-gradient(135deg, #1e4d7b 0%, #0c4a6e 100%);
     }
     
-    /* Score badge - Large and prominent */
+    /* Score badge - Monochromatic blue shades */
     .score-badge {
         display: inline-block;
         padding: 15px 30px;
@@ -173,7 +173,7 @@ st.markdown("""
         font-weight: 900;
         font-size: 24px;
         margin: 15px 0;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 6px 20px rgba(37, 99, 168, 0.3);
         transition: all 0.3s ease;
     }
     
@@ -182,27 +182,27 @@ st.markdown("""
     }
     
     .score-excellent {
-        background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
-        color: white;
-        border: 3px solid #6ee7b7;
+        background: linear-gradient(135deg, #0c4a6e 0%, #075985 100%);
+        color: #e8f4f8;
+        border: 3px solid #0ea5e9;
     }
     
     .score-good {
-        background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
-        color: white;
-        border: 3px solid #93c5fd;
+        background: linear-gradient(135deg, #1e4d7b 0%, #2563a8 100%);
+        color: #e8f4f8;
+        border: 3px solid #38bdf8;
     }
     
     .score-fair {
-        background: linear-gradient(135deg, #fbbf24 0%, #fcd34d 100%);
-        color: #1f2937;
-        border: 3px solid #fde68a;
+        background: linear-gradient(135deg, #5fa3d0 0%, #7bb8db 100%);
+        color: #0c1e3d;
+        border: 3px solid #a8d5e8;
     }
     
     .score-poor {
-        background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
-        color: white;
-        border: 3px solid #fca5a5;
+        background: linear-gradient(135deg, #a8d5e8 0%, #d1e7f0 100%);
+        color: #0c1e3d;
+        border: 3px solid #e8f4f8;
     }
 </style>
 """, unsafe_allow_html=True)
